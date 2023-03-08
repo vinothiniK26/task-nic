@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style type="text/css">
+		body{
+			height: 400vh;
+		}
+		::-webkit-scrollbar{
+			width: 20px;
+		}
+		::-webkit-scrollbar-track{
+			background: lightpink;
+		}
+		::-webkit-scrollbar-thumb{
+			background: purple;
+            border-radius: 24px;
+
+
+		}
+	</style>
+
+</head>
+<body  style="background:url('bgimage.jpg'); background-size: cover;">
+    <div class="container-fluid row mt-5">
+         <div class="col-4"></div>
+         <div class="col-4  ">
+             <p style="text-align: center; color: darkmagenta; font-style: italic; font-weight: bold; font-size: 25PX;">FORM</p>
+            <form method="post" action="sampleinsert.php" id="form" style="text-transform:capitalize;" >
+             <!-- name -->
+             <label for="" class="form-label">Name</label>
+             <input type="text" name="name" id="name" class="form-control name" onkeyup="check()" >  
+             <div style="display: none; color: red;" id="nalert" >Please enter Name</div>  
+             <!--Father name  -->
+             <label for="" class="form-label">Father name</label>
+             <input type="text" name="fname" id="fname" class="form-control fname" onkeyup="check()" >
+             <div id="falert" style="display: none; color: red;">Please enter father name</div>
+             <!-- gender -->
+             <label for="" class="form-label mt-3 ">Gender</label>
+             <input type="radio" name="gender" id="genderM" value="1" class="form-check-control " onclick="$('#galert').hide()"> Male
+             <input type="radio" name="gender" id="genderF" value="2" class="form-check-control" onclick="$('#galert').hide()"> Female<br>
+             <div id="galert" style="display: none; color: red;">Please select gender</div>
+             <!-- Email -->
+             <label for="" class="form-label">Email</label>
+             <input type="email" name="email" id="email" class="form-control" >
+             <div id="ealert" style="display: none; color: red;">Please enter E-mail</div>
+             <!-- Phone number -->
+             <label for="" class="form-label">Phone Number</label>
+             <input type="text" name="phno" id="phno" class="form-control phno" maxlength="10" onkeypress="phno.style.border='1px solid silver'"onkeyup="$('#palert').hide()">
+             <div id="palert" style="display: none; color: red;">Please enter Phone Number</div>
+
+
+             <button id="btn" class="btn btn-primary mt-3" type="button" onclick="validation()" >submit</button>
+             </form>
+         </div>
+         <br>
+         <div class="container">
+            <table class="table table-hover table-bordered">
+                <tr style="font-size: 16px; color: black;">
+                    <th>name</th>
+                    <th>Father Name</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                </tr>
+            </table>
+        </div>
+         
+         <div class="col-4"></div>
+    </div>
+   
+</body>                
+
+<script>
+    //rejex code for validation
+    $(document).on('keyup blur','.name,.fname',function(){
+    $(this).val( $(this).val().replace(/[^A-Za-z ]/g,'') ); 
+});
+
+$(document).on('keyup blur','.phno',function(){	
+	$(this).val( $(this).val().replace(/[^0-9]/g,'') ); 
+});
+
+$('#email').keyup(function(){
+    email.style.border='1px solid silver';
+        ealert.style.display="none";
+});
+
+
+// function validation()
+// {
+   //input field validation
+    
+        $(document).ready(function(){
+            $('#btn').click(function(){
+    var name=document.getElementById('name');
+    var nalert=document.getElementById('nalert');
+    var fname=document.getElementById('fname');
+    var falert=document.getElementById('falert')
+    var genderM=document.getElementById('genderM');
+    var genderF=document.getElementById('genderF');
+    var galert=document.getElementById('galert');
+    var emailformat = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    var email=document.getElementById('email');
+    var ealert=document.getElementById('ealert');
+    var phone=document.getElementById('phno');
+    var palert=document.getElementById('palert');
+    var Invalid_Mobile_no = ['6666666666', '7777777777', '8888888888', '9999999999'];
+    //name validation
+if(name.value==""){
+        name.style.border='2px solid red';
+        nalert.style.display='block';      
+    }
+    //Father name validation
+else if(fname.value==""){
+        
+        fname.style.border='1px solid red';
+        falert.style.display='block';     
+    }
+    //gender validation
+  else  if(genderM.checked ==false && genderF.checked ==false){
+        //gender.style.border='1px solid red';
+        galert.style.display='block';     
+       
+    }
+    //Email validation
+  else  if(email.value==""){
+        
+        email.style.border='1px solid red';
+        ealert.style.display='block';     
+        
+    }
+ else   if(!email.value.match(emailformat)){
+        email.style.border='1px solid red';
+        ealert.style.display='block';  
+        ealert.innerHTML='enter valid E-mail';
+    }
+    //phone validation
+else  if(phone.value==""){
+        phone.style.border='1px solid red';
+        palert.style.display='block';      
+    }
+   else if(!phone.value.match('[6-9]{1}[0-9]{9}')){
+        phone.style.border='1px solid red';
+        palert.style.display='block';  
+        palert.innerHTML='enter valid Number';
+
+    }
+    else if(phone.value=='6666666666'|| phone.value=='7777777777'||phone.value=='8888888888'||phone.value=='9999999999'){
+        phone.style.border='1px solid red';
+        palert.style.display='block';  
+        palert.innerHTML="Don't enter repeated value";
+
+    }
+    else{
+               $.ajax({
+                   url:"sampleinsert.php",
+                   type:"post",
+                   data:$("#form").serialize(),
+                   success:function(d){
+                    //    alert(d);
+                    swal(d, "Thank you", "success", {
+      button: "ok",
+ 
+    });
+                       $("#form")[0].reset();
+                   }
+               })
+            }
+           }); 
+         });
+              
+ //   }
+    
+    
+//
+    function check(){
+    var name=document.getElementById('name');
+    var fname=document.getElementById('fname');
+    
+
+    if(name.value!=""){
+        name.style.border='2px solid silver';
+        nalert.style.display="none";
+    }
+   if(fname.value!=""){
+        fname.style.border='1px solid silver';
+        falert.style.display="none";
+    }
+   
+
+}
+ </script>
+ <script>
+    $(document).ready(function(){
+        $.ajax({
+            url:'samplefetch.php',
+            type:'post',
+            data:'json',
+            success:function(response){
+                var data=JSON.parse(response);
+                for(i in data){
+                    $("table").append(
+                        "<tr><td>"+data[i].name+"</td>"
+                            +"<td>"+data[i].fathername+"</td>"
+                            +"<td>"+data[i].gender+"</td>"
+                            +"<td>"+data[i].email+"</td>"
+                            +"<td>"+data[i].phonenumber+"</td>"
+                    )
+                }
+            }
+        })
+    })
+</script>
+</html>
